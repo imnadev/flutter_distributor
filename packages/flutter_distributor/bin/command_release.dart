@@ -34,8 +34,8 @@ class CommandRelease extends Command {
     );
 
     argParser.addFlag(
-      'skip-clean',
-      help: 'Whether or not to skip \'flutter clean\' before packaging.',
+      'clean',
+      help: 'Whether or not to \'flutter clean\' before packaging.',
     );
   }
 
@@ -58,7 +58,7 @@ class CommandRelease extends Command {
         .split(',')
         .where((String e) => e.isNotEmpty)
         .toList();
-    bool isSkipClean = argResults?.wasParsed('skip-clean') ?? false;
+    bool isClean = argResults?.wasParsed('clean') ?? false;
 
     // At least `name` must be passed to select a release
     if (name == null) {
@@ -70,7 +70,7 @@ class CommandRelease extends Command {
       name,
       jobNameList: jobNameList,
       skipJobNameList: skipJobNameList,
-      cleanBeforeBuild: !isSkipClean,
+      cleanBeforeBuild: isClean,
     );
   }
 }

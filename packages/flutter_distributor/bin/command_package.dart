@@ -47,8 +47,8 @@ class CommandPackage extends Command {
     argParser.addOption('artifact-name', valueHelp: '');
 
     argParser.addFlag(
-      'skip-clean',
-      help: 'Whether or not to skip \'flutter clean\' before packaging.',
+      'clean',
+      help: 'Whether or not to \'flutter clean\' before packaging.',
     );
 
     argParser.addOption(
@@ -114,7 +114,7 @@ class CommandPackage extends Command {
     final String? channel = argResults?['channel'];
     final String? artifactName = argResults?['artifact-name'];
     final String? flutterBuildArgs = argResults?['flutter-build-args'];
-    final bool isSkipClean = argResults?.wasParsed('skip-clean') ?? false;
+    final bool isClean = argResults?.wasParsed('clean') ?? false;
     final Map<String, dynamic> buildArguments =
         _generateBuildArgs(flutterBuildArgs);
 
@@ -134,7 +134,7 @@ class CommandPackage extends Command {
       targets,
       channel: channel,
       artifactName: artifactName,
-      cleanBeforeBuild: !isSkipClean,
+      cleanBeforeBuild: isClean,
       buildArguments: buildArguments,
     );
   }
